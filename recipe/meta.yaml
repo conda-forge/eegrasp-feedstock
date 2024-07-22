@@ -1,13 +1,13 @@
 {% set name = "eegrasp" %}
-{% set version = "0.0.3" %}
+{% set version = "0.0.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eegrasp-{{ version }}.tar.gz
-  sha256: 8b87e6ecf686cd7f7c867f6c774d30657b95143de785ebd3fd7a05bde3fcdb8a
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eegrasp-{{ vers>
+  sha256: 277518c73ad4b89600536ddd69198ed6cba8d872b28f40d4531579de43356875
 
 build:
   noarch: python
