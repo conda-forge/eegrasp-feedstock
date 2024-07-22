@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eegrasp-{{ vers>
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eegrasp-{{ version }}.tar.gz
   sha256: 277518c73ad4b89600536ddd69198ed6cba8d872b28f40d4531579de43356875
 
 build:
