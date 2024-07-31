@@ -43,17 +43,20 @@ jobs:
     - name: Update Recipe Using Grayskull
       if: steps.check_version.outputs.new_version != ''
       run: |
+        NEW_VERSION=${{ steps.check_version.outputs.new_version }}
         PACKAGE_NAME=${{ steps.check_version.outputs.package_name }}
 
-        # Generate or update the recipe using Grayskull
-        grayskull pypi $PACKAGE_NAME
+        # Regenerate the entire recipe using Grayskull
+        grayskull pypi $PACKAGE_NAME --output recipe --maintainers lcortesg
 
         # Commit changes
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
+        mv recipe/$PACKAGE_NAME/meta.yaml recipe/meta.yaml
+        rm -rf recipe/$PACKAGE_NAME
         git add recipe/*
         git status  # Check status
-        git commit -m "Update $PACKAGE_NAME recipe" || echo "No changes to commit"
+        git commit -m "Update $PACKAGE_NAME to version $NEW_VERSION" || echo "No changes to commit"
 
     - name: Create Pull Request
       if: steps.check_version.outputs.new_version != ''
@@ -63,7 +66,9 @@ jobs:
         title: Update ${{ steps.check_version.outputs.package_name }} to ${{ steps.check_version.outputs.new_version }}
         body: |
           This PR updates the ${{ steps.check_version.outputs.package_name }} package to version ${{ steps.check_version.outputs.new_version }} using Grayskull.
-
+        labels: |
+          automerge
+        
     - name: Auto Merge Pull Request
       if: steps.check_version.outputs.new_version != ''
       uses: pascalgn/automerge-action@v0.15.0
